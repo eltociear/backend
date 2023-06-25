@@ -13,7 +13,7 @@ const createMockVerification = test('Create Mock Email Verify Notification', asy
     return await createMockNotification('user-verify-email', 'UserVerifyEmailNotification');
 });
 
-export const pupilOne = test('Register Pupil', async () => {
+export async function createPupil() {
     const mockEmailVerification = await createMockVerification;
 
     await setup;
@@ -101,10 +101,12 @@ export const pupilOne = test('Register Pupil', async () => {
     // Ensure that E-Mails are consumed case-insensitive everywhere:
     pupil.email = pupil.email.toUpperCase();
 
-    return { client, pupil: pupil as { userID: string, firstname: string; lastname: string; email: string; pupil: { id: number } } };
-});
+    return { client, pupil: pupil as { userID: string; firstname: string; lastname: string; email: string; pupil: { id: number } } };
+}
 
-export const studentOne = test('Register Student', async () => {
+export const pupilOne = test('Register Pupil', createPupil);
+
+export async function createStudent() {
     await setup;
     const mockEmailVerification = await createMockVerification;
 
@@ -184,9 +186,11 @@ export const studentOne = test('Register Student', async () => {
     student.email = student.email.toUpperCase();
 
     return { client, student: student as { userID: string; firstname: string; lastname: string; email: string; student: { id: number } } };
-});
+}
 
-export const instructorOne = test('Register Instructor', async () => {
+export const studentOne = test('Register Student', createStudent);
+
+export async function createInstructor() {
     await setup;
     const mockEmailVerification = await createMockVerification;
 
@@ -261,7 +265,9 @@ export const instructorOne = test('Register Instructor', async () => {
     instructor.email = instructor.email.toUpperCase();
 
     return { client, instructor };
-});
+}
+
+export const instructorOne = test('Register Instructor', createInstructor);
 
 export const pupilUpdated = test('Update Pupil', async () => {
     const { client, pupil } = await pupilOne;

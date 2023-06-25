@@ -412,6 +412,9 @@ const _notificationActions = {
             appointment: sampleAppointment,
         },
     },
+    inactive_person_account_deletion_reminder: {
+        description: 'Tell inactive person that his account will be deleted soon',
+    },
 
     user_authenticate: DEPRECATED,
     user_login_email: DEPRECATED,
